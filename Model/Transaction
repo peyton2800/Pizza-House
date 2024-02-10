@@ -1,0 +1,25 @@
+# Author @ghimireSubash
+# Basic transaction class
+# Create editCart() function to create a cart for items
+# Create calculateTotal() to get the  total of all items in cart
+# Create displayTotal() to display the total to the customer
+class Transactions:
+    def __init__(self, ID, customer_ID, receipt_num, amount, pay_method, date):
+        self.ID = ID
+        self.customer_ID = customer_ID
+        self.receipt_num = receipt_num
+        self.amount = amount
+        self.pay_method = pay_method
+        self.date = date
+        self.cart = []
+
+    def editCart(self, item, price):
+        self.cart.append((item, price))
+
+    def calculateTotal(self):
+        total = sum(price for _, price in self.cart)
+        return total
+
+    def displayTotal(self):
+        total = self.calculateTotal()
+        print(f"Total amount for transaction {self.ID}: ${total:.2f}")
