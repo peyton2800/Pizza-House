@@ -1,0 +1,33 @@
+<!-- menu.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Menu{% endblock %}
+
+{% block content %}
+<h1 class="mt-5">Menu</h1>
+<ul class="list-group">
+    {% for item_name, price in menu_items.items() %}
+        <li class="list-group-item">{{ item_name }} - ${{ price }}</li>
+    {% endfor %}
+</ul>
+
+<h2 class="mt-5">Add to Order</h2>
+<form action="/add_to_order" method="POST">
+    <div class="form-group">
+        <label for="item">Item:</label>
+        <select class="form-control" name="item" id="item">
+            {% for item_name, price in menu_items.items() %}
+                <option value="{{ item_name }}">{{ item_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add to Order</button>
+</form>
+
+{% if added %}
+    <p>Item added to order!</p>
+{% endif %}
+
+<a href="/view_order" class="btn btn-info mt-3">View Cart</a> <!-- Added View Cart button -->
+{% endblock %}
