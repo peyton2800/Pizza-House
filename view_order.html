@@ -1,0 +1,53 @@
+<!-- view_order.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+<h1 class="mt-5">Your Order</h1>
+<table class="table mt-3">
+    <thead>
+    <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items %}
+        <tr>
+            <td>{{ item['item_name'] }}</td>
+            <td>${{ item['price'] }}</td>
+            <td>
+                <form action="/remove_from_order/{{ item['index'] }}" method="post">
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td><strong>Total</strong></td>
+        <td><strong>${{ total }}</strong></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+ <!-- Checkout button with confirmation dialog -->
+        <button onclick="confirmCheckout()" class="btn btn-success mt-3">Proceed to Checkout</button>
+    </div>
+
+    <!-- JavaScript code for confirmation dialog -->
+    <script>
+        function confirmCheckout() {
+            var confirmation = confirm("Will that be all for your order?");
+            if (confirmation) {
+                // If user confirms, proceed to checkout
+                window.location.href = "/checkout";
+            } else {
+                // If user cancels, stay on the view order page
+                // Do nothing, user remains on the current page
+            }
+        }
+    </script>
+{% endblock %}
