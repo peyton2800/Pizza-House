@@ -1,20 +1,20 @@
-# Order Class Menu
+# Cancel Order
 # Chris Dixon
-# 02/07/2024
+# 02/16/2024
 
-"""The following program is designed to the order class for the upcoming Pizza House Pizzeria Delivery service.
-It will ask the user for items, then it will add them to a list, as well as add multiple orders."""
+"""The following program is designed to allow the user to remove orders from the list"""
 
 # Food Menu
-
 food_menu = {"Pizza", "Wings", "Fries", "Chips", "Soda", "Juice", "Water"}
 
-# New Order Input
-
+# Current Order
 current_order = [["Pizza", "Fries", "Soda"], ["Wings, Chips, Juice"]]
+
+# Order Number
 order_number = {'Pizza", "Fries", "Soda': 1, 'Wings, Chips, Juice': 2}
 
 
+# Delete Order
 def del_order():
     while True:
         print("What order do you want to remove?", "1 or 2? ")
@@ -22,7 +22,7 @@ def del_order():
         if order == 1 or order == 2:
             choice = (order - 1)
             del current_order[choice]
-            print("Order", order , "deleted.")
+            print("Order", order, "deleted.")
         elif order != 1 or order != 2:
             print("Order does not exist")
         else:
