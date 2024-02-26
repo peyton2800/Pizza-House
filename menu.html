@@ -1,33 +1,49 @@
-<!-- menu.html -->
-
-{% extends "base.html" %}
+<!--Menu Interface -->
+{% extends 'base.html' %}
 
 {% block title %}Menu{% endblock %}
 
 {% block content %}
-<h1 class="mt-5">Menu</h1>
-<ul class="list-group">
-    {% for item_name, price in menu_items.items() %}
-        <li class="list-group-item">{{ item_name }} - ${{ price }}</li>
+<div class="container">
+    <h1 class="mt-5">Menu</h1>
+    {% for category, items in categorized_menu.items() %}
+    <!-- Loops through each category in the 'categorized_menu' variable passed from route. -->
+    <h2>{{ category }}</h2>
+    <ul class="list-group">
+        {% for item in items %}
+        <!-- Loops through each item within the current category. -->
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                {{ item.item_name }}
+                <span class="badge badge-primary badge-pill">${{ item.price }}</span>
+                <p>{{ item.description }}</p>
+            </div>
+            <form action="/add_to_cart" method="POST">
+                <input type="hidden" name="item" value="{{ item.item_name }}">
+                {% if options_by_category[category] %}
+                    {% for option_type, options in options_by_category[category].items() %}
+                    <!-- Loops through each customization option type for the current category. -->
+                    <div class="form-group">
+                        <label for="customization_{{ option_type|lower }}">{{ option_type }}</label>
+                        <select class="form-control" id="customization_{{ option_type|lower }}" name="customization_{{ option_type|lower }}">
+                            <option value="None" {% if (item.item_name in default_customizations and default_customizations[item.item_name].get(option_type) == 'None') or not options %}selected{% endif %}>None</option>
+                            {% for option in options %}
+                            <!-- Loops through each specific option for the current option type. -->
+                            <option value="{{ option.option_name }}"
+                                {% if item.item_name in default_customizations and default_customizations[item.item_name].get(option_type) == option.option_name %}selected{% endif %}>
+                                {{ option.option_name }} (+${{ option.additional_price }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                <button type="submit" class="btn btn-primary">Add to Cart</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
     {% endfor %}
-</ul>
-
-<h2 class="mt-5">Add to Order</h2>
-<form action="/add_to_order" method="POST">
-    <div class="form-group">
-        <label for="item">Item:</label>
-        <select class="form-control" name="item" id="item">
-            {% for item_name, price in menu_items.items() %}
-                <option value="{{ item_name }}">{{ item_name }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Add to Order</button>
-</form>
-
-{% if added %}
-    <p>Item added to order!</p>
-{% endif %}
-
-<a href="/view_order" class="btn btn-info mt-3">View Cart</a> <!-- Added View Cart button -->
+    <a href="/cart" class="btn btn-success mt-3">View Cart</a>
+</div>
 {% endblock %}
