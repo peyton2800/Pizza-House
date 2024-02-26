@@ -1,43 +1,41 @@
-<!-- base.html -->
-
+<!--Base.html for navigation bar -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Website{% endblock %}</title>
-    <!-- Bootstrap CSS link -->
+    <title>{% block title %}Pizza House{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Links to the Bootstrap CSS for styling -->
 </head>
 <body>
-
-<!--Navigation Bar with Bootstrap -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Pizza House</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            {% if current_page == 'menu' %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/view_order">Cart</a>
-                </li>
-            {% elif current_page == 'view_order' %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Menu</a>
-                </li>
-            {% endif %}
-        </ul>
+    <div class="container mt-3">
+        <!-- Points to the home route -->
+        <h1><a href="{{ url_for('home') }}" style="text-decoration: none; color: inherit;">Pizza House</a></h1>
     </div>
-</nav>
 
-<div class="container">
-    {% block content %}{% endblock %}
-</div>
-
-<!-- Bootstrap JS script (optional, only if you need Bootstrap JavaScript functionality) -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <!-- Navigation bar using Bootstrap's navbar component -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <!-- Unordered list for navigation links -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('menu') }}">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('view_cart') }}">Cart</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 </body>
 </html>
