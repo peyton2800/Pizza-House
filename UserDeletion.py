@@ -1,6 +1,6 @@
 # UserDeletion
 # Chris Dixon
-# 03/022/2024
+# 03/27/2024
 
 """User account"""
 # NewUser dictionary
@@ -40,8 +40,6 @@ def account_registration():
             print(f"User: \n{NewUser['email']} already added. Please try another.")
         else:
             print("Invalid")
-
-        user_List.append(user_account)
 
         # phone
         NewUser['phonenumber'] = input("what is your phone number? ")
@@ -86,6 +84,7 @@ def account_registration():
             user_account["zip"] = NewUser['zip']
         else:
             print("Invalid")
+        user_List.append(user_account)
         break
 
     print(f"\nWelcome, {user_account['name']}.\n")
@@ -97,12 +96,10 @@ def account_registration():
 
 def account_deletion():
     while True:
-        NewUser = {}
-        user_account = {}
         if not user_List:
             print(f"\n[List empty]\n")
         elif user_List:
-            print(f"User list: \n{user_List}\n")
+            print("Current user list:", *user_List, sep="\n")
 
         # Username
         name = input("Which account to delete? ")
